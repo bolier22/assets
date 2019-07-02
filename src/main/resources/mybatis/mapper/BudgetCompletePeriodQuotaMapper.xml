@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.BudgetCompletePeriodQuotaMapper">
+    <resultMap id="BaseResultMap" type="BudgetCompletePeriodQuota">
+        <id property="budgetQuotaId" column="budget_quota_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="budgetIndex" column="budget_index"/>
+        <result property="budgetQuota" column="budget_quota"/>
+        <result property="budgetNumber" column="budget_number"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        budget_quota_id,
+        assets_station_id,
+        budget_index,
+        budget_quota,
+        budget_number,
+        remark,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+    <insert id="insertBatchBudgetCompletePeriodQuotaList" parameterType="java.util.HashMap">
+        insert into budget_complete_period_quota (
+        budget_quota_id,
+        assets_station_id,
+        budget_index,
+        budget_quota,
+        budget_number,
+        remark,
+        create_id
+        )
+        values
+        <foreach collection="budgetBaseList" item="item" index="index" separator="," >
+            (
+            #{item.budgetQuotaId},
+            #{item.assetsStationId},
+            #{item.budgetIndex},
+            #{item.budgetQuota},
+            #{item.budgetNumber},
+            #{item.remark},
+            #{item.createId}
+            )
+        </foreach>
+    </insert>
+
+
+
+    <select id="selectBudgetCompletePeriodQuotaListByStationId"  parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from budget_complete_period_quota
+        where assets_station_id = #{assetsStationId} order by budget_index+0
+    </select>
+
+    <!-- 首先查询出符合条件的数据id编号 -->
+    <delete id="deleteBudgetCompletePeriodQuotaByStationId"  parameterType="Long">
+        delete from budget_complete_period_quota where assets_station_id = #{assetsStationId}
+    </delete>
+
+    <!--
+    <if test="budgetQuotaId != null and budgetQuotaId != ''">budget_quota_id = #{budgetQuotaId},</if>
+<if test="assetsStationId != null and assetsStationId != ''">assets_station_id = #{assetsStationId},</if>
+<if test="budgetIndex != null and budgetIndex != ''">budget_index = #{budgetIndex},</if>
+<if test="budgetQuota != null and budgetQuota != ''">budget_quota = #{budgetQuota},</if>
+<if test="budgetNumber != null and budgetNumber != ''">budget_number = #{budgetNumber},</if>
+<if test="remark != null and remark != ''">remark = #{remark},</if>
+<if test="createId != null and createId != ''">create_id = #{createId},</if>
+<if test="modifyId != null and modifyId != ''">modify_id = #{modifyId},</if>
+<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+<if test="modifyTime != null and modifyTime != ''">modify_time = #{modifyTime},</if>
+
+
+
+    -->
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.FinalAccountsCollectListMapper">
+    <resultMap id="BaseResultMap" type="FinalAccountsCollectList">
+        <id property="final8sListId" column="final8s_list_id"/>
+        <result property="final8sCollectId" column="final8s_collect_id"/>
+        <result property="listSeq" column="list_seq"/>
+        <result property="projectName" column="project_name"/>
+        <result property="budgetMoney" column="budget_money"/>
+        <result property="final8sCollectMoney" column="final8s_collect_money"/>
+        <result property="coreMoney" column="core_money"/>
+        <result property="corePer5ge" column="core_per5ge"/>
+        <result property="cons5ionUnit" column="cons5ion_unit"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        final8s_list_id,
+        final8s_collect_id,
+        list_seq,
+        project_name,
+        budget_money,
+        final8s_collect_money,
+        core_money,
+        core_per5ge,
+        cons5ion_unit,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+
+    <insert id="insertBatchFinalAccountsCollectList"   parameterType="java.util.HashMap">
+        insert into final_accounts_collect_list (
+        final8s_list_id,
+        final8s_collect_id,
+        list_seq,
+        project_name,
+        budget_money,
+        final8s_collect_money,
+        core_money,
+        core_per5ge,
+        cons5ion_unit,
+        create_id
+        )
+        values
+        <foreach collection="fina8sList" item="item" index="index" separator="," >
+            (
+            #{item.final8sListId},
+            #{final8sCollectId},
+            #{item.listSeq},
+            #{item.projectName},
+            #{item.budgetMoney},
+            #{item.final8sCollectMoney},
+            #{item.coreMoney},
+            #{item.corePer5ge},
+            #{item.cons5ionUnit},
+            #{item.createId}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据决算汇总表主键final8sCollectId 删除决算汇总列表信息 -->
+    <delete id="deleteFinalAccountsCollectListByCollectId"  parameterType="Long">
+        delete from final_accounts_collect_list where final8s_collect_id = #{final8sCollectId}
+    </delete>
+
+    <select id="selectFinalAccountsCollectListListByStationId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from final_accounts_collect_list
+        where final8s_collect_id = #{final8sCollectId}
+        order by CAST(list_seq as SIGNED)
+    </select>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.Imp7tionBudgetCollectBaseMapper">
+    <resultMap id="BaseResultMap" type="Imp7tionBudgetCollectBase">
+        <id property="budgetCollectId" column="budget_collect_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="budgetCollectTitle" column="budget_collect_title"/>
+        <result property="budgetProjectName" column="budget_project_name"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        budget_collect_id,
+        assets_station_id,
+        budget_collect_title,
+        budget_project_name,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+    <insert id="insertImp7tionBudgetCollectBase"  parameterType="Imp7tionBudgetCollectBase" useGeneratedKeys="true" keyProperty="budgetCollectId">
+        insert into imp7tion_budget_collect_base (
+        budget_collect_id,
+        assets_station_id,
+        budget_collect_title,
+        budget_project_name,
+        create_id
+        )
+        values
+            (
+            #{budgetCollectId},
+            #{assetsStationId},
+            #{budgetCollectTitle},
+            #{budgetProjectName},
+            #{createId}
+            )
+    </insert>
+
+    <!-- 首先查询出符合条件的数据id编号 -->
+    <delete id="deleteImp7tionBudgetCollectBaseByStationId"  parameterType="Long">
+        delete from imp7tion_budget_collect_base where assets_station_id = #{assetsStationId}
+    </delete>
+
+    <select id="selectImp7tionBudgetCollectBaseByStationId"  parameterType="Long" resultMap="BaseResultMap">
+        select budget_collect_id from imp7tion_budget_collect_base where assets_station_id = #{assetsStationId} limit 1
+    </select>
+
+    <!--
+    <if test="budgetCollectId != null and budgetCollectId != ''">budget_collect_id = #{budgetCollectId},</if>
+<if test="assetsStationId != null and assetsStationId != ''">assets_station_id = #{assetsStationId},</if>
+<if test="budgetCollectTitle != null and budgetCollectTitle != ''">budget_collect_title = #{budgetCollectTitle},</if>
+<if test="budgetProjectName != null and budgetProjectName != ''">budget_project_name = #{budgetProjectName},</if>
+<if test="createId != null and createId != ''">create_id = #{createId},</if>
+<if test="modifyId != null and modifyId != ''">modify_id = #{modifyId},</if>
+<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+<if test="modifyTime != null and modifyTime != ''">modify_time = #{modifyTime},</if>
+
+
+
+    -->
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.FieldAgreementMapper">
+    <resultMap id="BaseResultMap" type="FieldAgreement">
+        <id property="fieldAgr5tId" column="field_agr5t_id"/>
+        <result property="fieldAgr5tName" column="field_agr5t_name"/>
+        <result property="fieldAgr5tCode" column="field_agr5t_code"/>
+        <result property="fieldAgr5tType" column="field_agr5t_type"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="siteRentBeginTime" column="site_rent_begin_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        field_agr5t_id,field_agr5t_name,field_agr5t_code,field_agr5t_type,assets_station_id,site_rent_begin_time,
+        create_id,modify_id,create_time,modify_time
+    </sql>
+    <sql id="condition">
+        <if test="assetsStationId != null">
+            and assets_station_id = #{assetsStationId}
+        </if>
+        <if test="fieldAgr5tCode !=null and fieldAgr5tCode !=''">
+            and field_agr5t_code = #{fieldAgr5tCode}
+        </if>
+        <if test="fieldAgr5tType !=null">
+            and field_agr5t_type = #{fieldAgr5tType}
+        </if>
+        <if test="assetsStationIdList !=null and assetsStationIdList.size()>0">
+            and assets_station_id in 
+            <foreach collection="assetsStationIdList" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="selectFieldAgreementCount" parameterType="FieldAgreement" resultType="Long">
+        select count(1) from field_agreement
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    
+    <select id="selectFieldAgreementList" parameterType="FieldAgreement" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from field_agreement
+        <where>
+            <include refid="condition"/>
+        </where>
+        order by field_agr5t_id desc
+        <if test="pager!=null">limit #{pager.offset},#{pager.pageSize}</if>
+    </select>
+    
+    <delete id="deleteFieldAgreement" parameterType="Long">
+        delete from field_agreement where field_agr5t_id = #{fieldAgr5tId}
+    </delete>
+
+
+    <insert id="insertFieldAgreement"  parameterType="FieldAgreement" useGeneratedKeys="true" keyProperty="fieldAgr5tId">
+        insert into field_agreement (
+        field_agr5t_id,
+        field_agr5t_name,
+        field_agr5t_code,
+        field_agr5t_type,
+        assets_station_id,
+        site_rent_begin_time,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+        )
+        values
+            (
+            null,
+            #{fieldAgr5tName},
+            #{fieldAgr5tCode},
+            #{fieldAgr5tType},
+            #{assetsStationId},
+            #{siteRentBeginTime},
+            #{createId},
+            #{modifyId},
+            now(),
+            now()
+            )
+    </insert>
+    <update id="updateFieldAgreement" parameterType="FieldAgreement">
+        update field_agreement set field_agr5t_name = #{fieldAgr5tName},field_agr5t_code = #{fieldAgr5tCode},
+        field_agr5t_type = #{fieldAgr5tType},site_rent_begin_time = #{siteRentBeginTime},modify_id = #{modifyId},modify_time = now()
+        where field_agr5t_id = #{fieldAgr5tId}
+    </update>
+    
+    <select id="selectFieldAgreementById" parameterType="FieldAgreement" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from field_agreement where  field_agr5t_id = #{fieldAgr5tId}
+    </select>
+    
+    <delete id="deleteFieldAgreementByStationId" parameterType="Long">
+        delete from field_agreement where assets_station_id = #{assetsStationId}
+    </delete>
+    
+    <select id="selectFieldAgreementByStationId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from field_agreement where assets_station_id = #{assetsStationId} limit 1
+    </select>
+</mapper>

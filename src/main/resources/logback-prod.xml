@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <configuration debug="true">
+    <contextName>logback</contextName>
+    <property name="log.path" value="logs/logback.log" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">　　　　
+        <encoder>　　　　　　　　　
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>　　　　
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">　　
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <appender name="DebugFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>%d{HH:mm:ss.SSS} [%thread][%logger{36}] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志级别 -->
+    <logger name="com" level="INFO">
+        <appender-ref ref="DebugFile"/>
+    </logger>
+
+    <logger name="org.springframework" level="INFO">
+        <appender-ref ref="DebugFile"/>
+    </logger>
+
+</configuration>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.AssetsEquipmentListMapper">
+    <resultMap id="BaseResultMap" type="AssetsEquipmentList">
+        <id property="assetsEqu5tId" column="assets_equ5t_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="equ5tId" column="equ5t_id"/>
+        <result property="equ5tName" column="equ5t_name"/>
+        <result property="approvalModelId" column="approval_model_id"/>
+        <result property="approvalModelName" column="approval_model_name"/>
+        <result property="approvalAmount" column="approval_amount"/>
+        <result property="imp7tionModelId" column="imp7tion_model_id"/>
+        <result property="imp7tionModelName" column="imp7tion_model_name"/>
+        <result property="imp7tionAmount" column="imp7tion_amount"/>
+        <result property="final8sModelId" column="final8s_model_id"/>
+        <result property="final8sModelName" column="final8s_model_name"/>
+        <result property="final8sAmount" column="final8s_amount"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        assets_equ5t_id,assets_station_id,equ5t_id,equ5t_name, approval_model_name,approval_amount,imp7tion_model_name,
+        imp7tion_amount,final8s_model_name,final8s_amount,create_id,modify_id,create_time,modify_time,approval_model_id,imp7tion_model_id,final8s_model_id
+    </sql>
+
+
+    <insert id="insertAssetsEquipment"  parameterType="AssetsEquipmentList" useGeneratedKeys="true" keyProperty="assetsEqu5tId">
+        insert into assets_equipment_list (
+        assets_equ5t_id,
+        assets_station_id,
+        equ5t_id,
+        <if test="equ5tName !=null and equ5tName !=''">
+            equ5t_name,
+        </if>
+        <if test="approvalModelId !=null ">
+            approval_model_id,
+        </if>
+        <if test="approvalModelName !=null and approvalModelName !=''">
+            approval_model_name,
+        </if>
+        <if test="approvalAmount !=null ">
+            approval_amount,
+        </if>
+        <if test="imp7tionModelId !=null ">
+            imp7tion_model_id,
+        </if>
+        <if test="imp7tionModelName !=null and imp7tionModelName !=''">
+            imp7tion_model_name,
+        </if>
+        <if test="imp7tionAmount !=null ">
+            imp7tion_amount,
+        </if>
+        <if test="final8sModelId !=null ">
+            final8s_model_id,
+        </if>
+        <if test="final8sModelName !=null and final8sModelName !='' ">
+            final8s_model_name,
+        </if>
+        <if test="final8sAmount !=null ">
+            final8s_amount,
+        </if>
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+        )
+        values
+            (
+            #{assetsEqu5tId},
+            #{assetsStationId},
+            #{equ5tId},
+        <if test="equ5tName !=null and equ5tName !=''">
+            #{equ5tName},
+        </if>
+        <if test="approvalModelId !=null ">
+            #{approvalModelId},
+        </if>
+        <if test="approvalModelName !=null and approvalModelName !=''">
+            #{approvalModelName},
+        </if>
+        <if test="approvalAmount !=null ">
+            #{approvalAmount},
+        </if>
+        <if test="imp7tionModelId !=null ">
+            #{imp7tionModelId},
+        </if>
+        <if test="imp7tionModelName !=null and imp7tionModelName !=''">
+            #{imp7tionModelName},
+        </if>
+        <if test="imp7tionAmount !=null ">
+            #{imp7tionAmount},
+        </if>
+        <if test="final8sModelId !=null ">
+            #{final8sModelId},
+        </if>
+        <if test="final8sModelName !=null and final8sModelName !='' ">
+            #{final8sModelName},
+        </if>
+        <if test="final8sAmount !=null ">
+            #{final8sAmount},
+        </if>
+            #{createId},
+            #{modifyId},
+            now(),
+            now()
+            )
+    </insert>
+    
+    <update id="updateAssetsEquipment" parameterType="AssetsEquipmentList">
+        update assets_equipment_list set
+        <if test="equ5tId != null and equ5tId != ''">equ5t_id = #{equ5tId},</if>
+        <if test="equ5tName != null and equ5tName != ''">equ5t_name = #{equ5tName},</if>
+        <if test="approvalModelId != null ">approval_model_id = #{approvalModelId},</if>
+        <if test="approvalModelName != null and approvalModelName != ''">approval_model_name = #{approvalModelName},</if>
+        <if test="approvalAmount != null and approvalAmount != ''">approval_amount = #{approvalAmount},</if>
+        <if test="imp7tionModelId != null ">imp7tion_model_id = #{imp7tionModelId},</if>
+        <if test="imp7tionModelName != null and imp7tionModelName != ''">imp7tion_model_name = #{imp7tionModelName},</if>
+        <if test="imp7tionAmount != null and imp7tionAmount != ''">imp7tion_amount = #{imp7tionAmount},</if>
+        <if test="final8sModelId != null ">final8s_model_id = #{final8sModelId},</if>
+        <if test="final8sModelName != null and final8sModelName != ''">final8s_model_name = #{final8sModelName},</if>
+        <if test="final8sAmount != null and final8sAmount != ''">final8s_amount = #{final8sAmount},</if>
+        modify_id = #{modifyId},
+        modify_time = now()
+        where assets_equ5t_id = #{assetsEqu5tId}
+    </update>
+    
+    <select id="selectEquipmentListByStationId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from assets_equipment_list where assets_station_id = #{assetsStationId}
+    </select>
+    
+    <select id="selectEquipmentList" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from assets_equipment_list
+    </select>
+    <delete id="deleteEquipmentListByStationId" parameterType="Long" >
+        delete from  assets_equipment_list where  assets_station_id = #{assetsStationId}
+    </delete>
+</mapper>

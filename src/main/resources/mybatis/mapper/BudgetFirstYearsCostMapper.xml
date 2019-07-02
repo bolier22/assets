@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.BudgetFirstYearsCostMapper">
+    <resultMap id="BaseResultMap" type="BudgetFirstYearsCost">
+        <id property="budget1yearId" column="budget_1year_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="budgetIndex" column="budget_index"/>
+        <result property="costCategory" column="cost_category"/>
+        <result property="costMoney" column="cost_money"/>
+        <result property="cal4tionRule" column="cal4tion_rule"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        budget_1year_id,
+        assets_station_id,
+        budget_index,
+        cost_category,
+        cost_money,
+        cal4tion_rule,
+        remark,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+    <insert id="insertBatchBudgetFirstYearsCostList"  parameterType="java.util.HashMap">
+        insert into budget_first_years_cost (
+        budget_1year_id,
+        assets_station_id,
+        budget_index,
+        cost_category,
+        cost_money,
+        cal4tion_rule,
+        remark,
+        create_id
+        )
+        values
+        <foreach collection="budgetBaseList" item="item" index="index" separator="," >
+            (
+            #{item.budget1yearId},
+            #{item.assetsStationId},
+            #{item.budgetIndex},
+            #{item.costCategory},
+            #{item.costMoney},
+            #{item.cal4tionRule},
+            #{item.remark},
+            #{item.createId}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectBudgetFirstYearsCostListByStationId"  parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from budget_first_years_cost where assets_station_id = #{assetsStationId}
+        order by budget_index+0
+    </select>
+
+    <!-- 首先查询出符合条件的数据id编号 -->
+    <delete id="deleteBudgetFirstYearsCostByStationId"  parameterType="Long">
+        delete from budget_first_years_cost where assets_station_id = #{assetsStationId}
+    </delete>
+
+    <!--
+    <if test="budget1yearId != null and budget1yearId != ''">budget_1year_id = #{budget1yearId},</if>
+<if test="assetsStationId != null and assetsStationId != ''">assets_station_id = #{assetsStationId},</if>
+<if test="budgetIndex != null and budgetIndex != ''">budget_index = #{budgetIndex},</if>
+<if test="costCategory != null and costCategory != ''">cost_category = #{costCategory},</if>
+<if test="costMoney != null and costMoney != ''">cost_money = #{costMoney},</if>
+<if test="cal4tionRule != null and cal4tionRule != ''">cal4tion_rule = #{cal4tionRule},</if>
+<if test="remark != null and remark != ''">remark = #{remark},</if>
+<if test="createId != null and createId != ''">create_id = #{createId},</if>
+<if test="modifyId != null and modifyId != ''">modify_id = #{modifyId},</if>
+<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+<if test="modifyTime != null and modifyTime != ''">modify_time = #{modifyTime},</if>
+
+
+
+    -->
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.BudgetBaseMapper">
+    <resultMap id="BaseResultMap" type="BudgetBase">
+        <id property="budgetId" column="budget_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="budgetIndex" column="budget_index"/>
+        <result property="projectBase" column="project_base"/>
+        <result property="baseInfo" column="base_info"/>
+        <result property="budget1yearNumber" column="budget_1year_number"/>
+        <result property="budget2yearNumber" column="budget_2year_number"/>
+        <result property="budget3yearNumber" column="budget_3year_number"/>
+        <result property="budget4yearNumber" column="budget_4year_number"/>
+        <result property="budget5yearNumber" column="budget_5year_number"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        budget_id,
+        assets_station_id,
+        budget_index,
+        project_base,
+        base_info,
+        budget_1year_number,
+        budget_2year_number,
+        budget_3year_number,
+        budget_4year_number,
+        budget_5year_number,
+        remark,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+    <insert id="insertBatchBudgetBaseList" parameterType="java.util.HashMap">
+        insert into budget_base (
+        budget_id,
+        assets_station_id,
+        budget_index,
+        project_base,
+        base_info,
+        budget_1year_number,
+        budget_2year_number,
+        budget_3year_number,
+        budget_4year_number,
+        budget_5year_number,
+        remark,
+        create_id
+        )
+        values
+        <foreach collection="budgetBaseList" item="item" index="index" separator="," >
+            (
+            #{item.budgetId},
+            #{item.assetsStationId},
+            #{item.budgetIndex},
+            #{item.projectBase},
+            #{item.baseInfo},
+            #{item.budget1yearNumber},
+            #{item.budget2yearNumber},
+            #{item.budget3yearNumber},
+            #{item.budget4yearNumber},
+            #{item.budget5yearNumber},
+            #{item.remark},
+            #{item.createId}
+            )
+        </foreach>
+    </insert>
+
+
+
+    <select id="selectBudgetBaseListByStationId"  parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from budget_base where assets_station_id = #{assetsStationId}
+        order by budget_index+0
+    </select>
+
+    <!-- 首先查询出符合条件的数据id编号 -->
+    <delete id="deleteBudgetBaseByStationId"  parameterType="Long">
+        delete from budget_base where assets_station_id = #{assetsStationId}
+    </delete>
+
+    <!--
+    <if test="budgetId != null and budgetId != ''">budget_id = #{budgetId},</if>
+<if test="assetsStationId != null and assetsStationId != ''">assets_station_id = #{assetsStationId},</if>
+<if test="budgetIndex != null and budgetIndex != ''">budget_index = #{budgetIndex},</if>
+<if test="projectBase != null and projectBase != ''">project_base = #{projectBase},</if>
+<if test="baseInfo != null and baseInfo != ''">base_info = #{baseInfo},</if>
+<if test="budget1yearNumber != null and budget1yearNumber != ''">budget_1year_number = #{budget1yearNumber},</if>
+<if test="budget2yearNumber != null and budget2yearNumber != ''">budget_2year_number = #{budget2yearNumber},</if>
+<if test="budget3yearNumber != null and budget3yearNumber != ''">budget_3year_number = #{budget3yearNumber},</if>
+<if test="budget4yearNumber != null and budget4yearNumber != ''">budget_4year_number = #{budget4yearNumber},</if>
+<if test="budget5yearNumber != null and budget5yearNumber != ''">budget_5year_number = #{budget5yearNumber},</if>
+<if test="remark != null and remark != ''">remark = #{remark},</if>
+<if test="createId != null and createId != ''">create_id = #{createId},</if>
+<if test="modifyId != null and modifyId != ''">modify_id = #{modifyId},</if>
+<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+<if test="modifyTime != null and modifyTime != ''">modify_time = #{modifyTime},</if>
+
+
+
+    -->
+</mapper>

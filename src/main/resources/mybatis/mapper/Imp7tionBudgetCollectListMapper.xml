@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.Imp7tionBudgetCollectListMapper">
+    <resultMap id="BaseResultMap" type="Imp7tionBudgetCollectList">
+        <id property="budgetListId" column="budget_list_id"/>
+        <result property="budgetCollectId" column="budget_collect_id"/>
+        <result property="budgetListIndex" column="budget_list_index"/>
+        <result property="budgetListType" column="budget_list_type"/>
+        <result property="budgetProjectName" column="budget_project_name"/>
+        <result property="budgetListName" column="budget_list_name"/>
+        <result property="budgetListUnit" column="budget_list_unit"/>
+        <result property="budgetListAmount" column="budget_list_amount"/>
+        <result property="budgetListMoney" column="budget_list_money"/>
+        <result property="budgetTotalMoney" column="budget_total_money"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        budget_list_id,
+        budget_collect_id,
+        budget_list_index,
+        budget_list_type,
+        budget_project_name,
+        budget_list_name,
+        budget_list_unit,
+        budget_list_amount,
+        budget_list_money,
+        budget_total_money,
+        remark,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+
+    <insert id="insertBatchImp7tionBudgetCollectList" parameterType="java.util.HashMap">
+        insert into imp7tion_budget_collect_list (
+        budget_list_id,
+        budget_collect_id,
+        budget_list_index,
+        budget_list_type,
+        budget_project_name,
+        budget_list_name,
+        budget_list_unit,
+        budget_list_amount,
+        budget_list_money,
+        budget_total_money,
+        remark,
+        create_id
+        )
+        values
+        <foreach collection="imp7tionList" item="item" index="index" separator="," >
+            (
+            #{item.budgetListId},
+            #{budgetCollectId},
+            #{item.budgetListIndex},
+            #{item.budgetListType},
+            #{item.budgetProjectName},
+            #{item.budgetListName},
+            #{item.budgetListUnit},
+            #{item.budgetListAmount},
+            #{item.budgetListMoney},
+            #{item.budgetTotalMoney},
+            #{item.remark},
+            #{item.createId}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据实施预算汇总表主键budgetCollectId 删除决实施预算列表信息 -->
+    <delete id="deleteImp7tionBudgetCollectListByCollectId"  parameterType="Long">
+        delete from imp7tion_budget_collect_list where budget_collect_id = #{budgetCollectId}
+    </delete>
+    
+    <select id="selectImp7tionBudgetCollectListByStationId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from imp7tion_budget_collect_list
+        where budget_collect_id = #{budgetCollectId}
+        order by   CAST(budget_list_id as SIGNED)
+    </select>
+
+</mapper>

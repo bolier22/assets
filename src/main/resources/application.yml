@@ -1,0 +1,129 @@
+
+#配置tomcat访问端口
+server:
+  port: 9123
+  #  ssl:
+  #    key-store: classpath:keystore.p12
+  #    key-store-password: eichong
+  servlet:
+    context-path: /assets #配置项目名称
+
+
+spring:
+  #配置spring多数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-bp116mu6t6a3dw46qrw.mysql.rds.aliyuncs.com/eichong_assets?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: eichong
+    password: aSEe201803efSE
+    #    url: jdbc:mysql://47.100.79.44:3306/eichong_stat?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    #    username: root
+    #    password: eichong123
+    openMulti: true
+    type: com.zaxxer.hikari.HikariDataSource
+    #  spring.datasource.hikari.minimum-idle=5
+    #  spring.datasource.hikari.maximum-pool-size=15
+    #  spring.datasource.hikari.auto-commit=true
+    #  spring.datasource.hikari.idle-timeout=30000
+    #  spring.datasource.hikari.pool-name=DatebookHikariCP
+    #  spring.datasource.hikari.max-lifetime=1800000
+    #  spring.datasource.hikari.connection-timeout=30000
+    #  spring.datasource.hikari.connection-test-query=SELECT 1
+    idle-timeout: 30000
+    multi:
+    - key: slaveDB
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://rm-bp116mu6t6a3dw46qrw.mysql.rds.aliyuncs.com/eichong_assets?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: eichong
+      password: aSEe201803efSE
+      #      url: jdbc:mysql://106.14.97.176:3306/eichong?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      #      username: eichong_readonly
+      #      password: gr201808r5$Grre
+      idle-timeout: 20000
+    #      type: com.alibaba.druid.pool.DruidDataSource
+    - key: masterDB
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://rm-bp116mu6t6a3dw46qrw.mysql.rds.aliyuncs.com/eichong?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: eichong
+      password: aSEe201803efSE
+      #      url: jdbc:mysql://106.14.97.176:3306/eichong?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      #      username: eichong_readonly
+      #      password: gr201808r5$Grre
+      idle-timeout: 20000
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+
+  # Redis数据库索引（默认为0）
+  redis:
+    # Redis服务器地址
+    host: 172.16.1.219
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: acwl20180519rfvujmtgbyhn
+    database: 5
+    timeout: 1000
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 0
+        # 连接池中的最小空闲连接
+        min-idle: 0
+
+  #logback
+  profiles:
+    #指定读取配置文件:dev(开发环境),prod(生产环境),qa(测试环境)
+    active: dev
+
+  #配置热启动
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+    livereload:
+      enabled: true
+
+
+#配置mybatis的配置文件加载路径
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+  type-aliases-package: com.wanma.eichong.assets.entity
+
+#配置sql-log输出
+logging:
+  config: classpath:logback-${spring.profiles.active}.xml
+  level:
+    com.wanma.eichong.assets.mapper: debug
+  #开发环境
+  #java -jar app.jar --spring.profiles.active=dev--server.port=8060
+  #测试环境
+  #java -jar app.jar --spring.profiles.active=qa --server.port=8060
+  #生产环境
+  #java -jar app.jar --spring.profiles.active=prod --server.port=8060
+
+  #nohup java -jar assets.jar --spring.profiles.active=dev > assets.log 2>&1 &
+
+#自定义系统常量
+system-params:
+  image-uri: http://xxxxxx
+  image-name: http://name
+  costMaxTime: 200
+  sftp-host: 172.16.1.221
+  sftp-port: 21
+  sftp-username: ftpuser
+  sftp-password: 123456
+  sftp-dir: /var/www/html/deploy/assets/
+  file-download: http://47.99.218.157/deploy/assets/

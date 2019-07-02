@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.FieldAgreementDetailMapper">
+    <resultMap id="BaseResultMap" type="FieldAgreementDetail">
+        <id property="fieldDetailId" column="field_detail_id"/>
+        <result property="fieldAgr5tId" column="field_agr5t_id"/>
+        <result property="fieldBase" column="field_base"/>
+        <result property="fieldBaseInfo" column="field_base_info"/>
+        <result property="fieldYear1" column="field_year1"/>
+        <result property="fieldYear2" column="field_year2"/>
+        <result property="fieldYear3" column="field_year3"/>
+        <result property="fieldYear4" column="field_year4"/>
+        <result property="fieldYear5" column="field_year5"/>
+        <result property="fieldYear6" column="field_year6"/>
+        <result property="fieldYear7" column="field_year7"/>
+        <result property="fieldYear8" column="field_year8"/>
+        <result property="fieldYear9" column="field_year9"/>
+        <result property="fieldYear10" column="field_year10"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        field_detail_id,field_agr5t_id,field_base,field_base_info,field_year1,field_year2,field_year3,field_year4,field_year5,
+        field_year6,field_year7,field_year8,field_year9,field_year10,remark,create_id,modify_id,create_time,modify_time
+    </sql>
+
+
+    <insert id="insertFieldAgreementDetail"  parameterType="FieldAgreementDetail" useGeneratedKeys="true" keyProperty="fieldAgr5tId">
+        insert into field_agreement_detail (
+        field_detail_id,field_agr5t_id,field_base,field_base_info,field_year1,field_year2,field_year3,field_year4,field_year5,
+        field_year6,field_year7,field_year8,field_year9,field_year10,remark,create_id,modify_id,create_time,modify_time
+        )
+        values
+            (
+            null,#{fieldAgr5tId},#{fieldBase},#{fieldBaseInfo},#{fieldYear1},#{fieldYear2},#{fieldYear3},#{fieldYear4},#{fieldYear5},
+            #{fieldYear6},#{fieldYear7},#{fieldYear8},#{fieldYear9},#{fieldYear10},"",#{createId},#{modifyId},now(),now()
+            )
+    </insert>
+
+    <select id="selectFieldAgreementDetailListById" parameterType="Long" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from  field_agreement_detail where field_agr5t_id = #{fieldAgr5tId}
+    </select>
+    
+    <update id="updateFieldAgreementDetail" parameterType="FieldAgreementDetail">
+        update field_agreement_detail
+        <set>
+            <if test="fieldBase !=null and fieldBase !=''">
+                field_base = #{fieldBase},
+            </if>
+            <if test="fieldBaseInfo !=null and fieldBaseInfo !=''">
+                field_base_info = #{fieldBaseInfo},
+            </if>
+            <if test="fieldYear1 !=null and fieldYear1 !=''">
+                field_year1 = #{fieldYear1},
+            </if>
+            <if test="fieldYear2 !=null and fieldYear2 !=''">
+                field_year2 = #{fieldYear2},
+            </if>
+            <if test="fieldYear3 !=null and fieldYear3 !=''">
+                field_year3 = #{fieldYear3},
+            </if>
+            <if test="fieldYear4 !=null and fieldYear4 !=''">
+                field_year4 = #{fieldYear4},
+            </if>
+            <if test="fieldYear5 !=null and fieldYear5 !=''">
+                field_year5 = #{fieldYear5},
+            </if>
+            <if test="fieldYear6 !=null and fieldYear6 !=''">
+                field_year6 = #{fieldYear6},
+            </if>
+            <if test="fieldYear7 !=null and fieldYear7 !=''">
+                field_year7 = #{fieldYear7},
+            </if>
+            <if test="fieldYear8 !=null and fieldYear8 !=''">
+                field_year8 = #{fieldYear8},
+            </if>
+            <if test="fieldYear9 !=null and fieldYear9 !=''">
+                field_year9 = #{fieldYear9},
+            </if>
+            <if test="fieldYear10 !=null and fieldYear10 !=''">
+                field_year10 = #{fieldYear10},
+            </if>
+            <if test="modifyId !=null">
+                modify_id = #{modifyId},
+            </if>
+            modify_time = now()
+            where field_detail_id = #{fieldDetailId}
+        </set>
+    </update>
+    
+    <delete id="deleteFieldAgreementDetailByFieldId" parameterType="Long" >
+        delete from field_agreement_detail where field_agr5t_id = #{fieldAgr5tId}
+    </delete>
+</mapper>
+

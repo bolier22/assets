@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.BudgetFirst3yearsPeriodQuotaMapper">
+    <resultMap id="BaseResultMap" type="BudgetFirst3yearsPeriodQuota">
+        <id property="budget3yearId" column="budget_3year_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="budgetIndex" column="budget_index"/>
+        <result property="budget3yearQuota" column="budget_3year_quota"/>
+        <result property="budget1yearNumber" column="budget_1year_number"/>
+        <result property="budget2yearNumber" column="budget_2year_number"/>
+        <result property="budget3yearNumber" column="budget_3year_number"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        budget_3year_id,
+        assets_station_id,
+        budget_index,
+        budget_3year_quota,
+        budget_1year_number,
+        budget_2year_number,
+        budget_3year_number,
+        remark,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+    <!--<insert id="insertBatchBudgetFirst3yearsPeriodQuotaList"  parameterType="BudgetFirst3yearsPeriodQuota" useGeneratedKeys="true" keyProperty="budget3yearId">-->
+
+    <insert id="insertBatchBudgetFirst3yearsPeriodQuotaList" parameterType="java.util.HashMap">
+        insert into budget_first_3years_period_quota (
+        budget_3year_id,
+        assets_station_id,
+        budget_index,
+        budget_3year_quota,
+        budget_1year_number,
+        budget_2year_number,
+        budget_3year_number,
+        remark,
+        create_id
+        )
+        values
+        <foreach collection="budgetBaseList" item="item" index="index" separator="," >
+            (
+            #{item.budget3yearId},
+            #{item.assetsStationId},
+            #{item.budgetIndex},
+            #{item.budget3yearQuota},
+            #{item.budget1yearNumber},
+            #{item.budget2yearNumber},
+            #{item.budget3yearNumber},
+            #{item.remark},
+            #{item.createId}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="selectBudgetFirst3yearsPeriodQuotaListByStationId"  parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from budget_first_3years_period_quota
+        where assets_station_id = #{assetsStationId}
+        order by budget_index+0
+    </select>
+
+    <!-- 首先查询出符合条件的数据id编号 -->
+    <delete id="deleteBudgetFirst3yearsPeriodQuotaByStationId"  parameterType="Long">
+        delete from budget_first_3years_period_quota where assets_station_id = #{assetsStationId}
+    </delete>
+    <!--
+    <if test="budget3yearId != null and budget3yearId != ''">budget_3year_id = #{budget3yearId},</if>
+<if test="assetsStationId != null and assetsStationId != ''">assets_station_id = #{assetsStationId},</if>
+<if test="budgetIndex != null and budgetIndex != ''">budget_index = #{budgetIndex},</if>
+<if test="budget3yearQuota != null and budget3yearQuota != ''">budget_3year_quota = #{budget3yearQuota},</if>
+<if test="budget1yearNumber != null and budget1yearNumber != ''">budget_1year_number = #{budget1yearNumber},</if>
+<if test="budget2yearNumber != null and budget2yearNumber != ''">budget_2year_number = #{budget2yearNumber},</if>
+<if test="budget3yearNumber != null and budget3yearNumber != ''">budget_3year_number = #{budget3yearNumber},</if>
+<if test="remark != null and remark != ''">remark = #{remark},</if>
+<if test="createId != null and createId != ''">create_id = #{createId},</if>
+<if test="modifyId != null and modifyId != ''">modify_id = #{modifyId},</if>
+<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+<if test="modifyTime != null and modifyTime != ''">modify_time = #{modifyTime},</if>
+
+
+
+    -->
+</mapper>

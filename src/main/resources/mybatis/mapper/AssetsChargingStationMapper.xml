@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.AssetsChargingStationMapper">
+    <resultMap id="BaseResultMap" type="AssetsChargingStation">
+        <id property="assetsStationId" column="assets_station_id"/>
+        <result property="stationName" column="station_name"/>
+        <result property="stationCode" column="station_code"/>
+        <result property="approvalFlowingCode" column="approval_flowing_code"/>
+        <result property="stationStage" column="station_stage"/>
+        <result property="provinceCode" column="province_code"/>
+        <result property="cityCode" column="city_code"/>
+        <result property="areaCode" column="area_code"/>
+        <result property="stationAddress" column="station_address"/>
+        <result property="projectLeader" column="project_leader"/>
+        <result property="approvalTotalPower" column="approval_total_power"/>
+        <result property="approvalTotalCost" column="approval_total_cost"/>
+        <result property="imp7tionTotalPower" column="imp7tion_total_power"/>
+        <result property="imp7tionTotalCost" column="imp7tion_total_cost"/>
+        <result property="final8sTotalPower" column="final8s_total_power"/>
+        <result property="final8sTotalCost" column="final8s_total_cost"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        assets_station_id, station_name,station_code, approval_flowing_code, station_stage,province_code,city_code,
+        area_code,station_address,project_leader, approval_total_power,approval_total_cost,imp7tion_total_power,imp7tion_total_cost,
+        final8s_total_power,final8s_total_cost,create_id,modify_id,create_time,modify_time
+    </sql>
+    <sql id="condition">
+        <where>
+            <if test="assetsStationId !=null">
+                and assets_station_id = #{assetsStationId}
+            </if>
+            <if test="stationCode !=null and stationCode !=''">
+                and station_code = #{stationCode}
+            </if>
+            <if test="approvalFlowingCode !=null and approvalFlowingCode !=''">
+                and approval_flowing_code = #{approvalFlowingCode}
+            </if>
+            <if test="stationStage !=null ">
+                and station_stage = #{stationStage}
+            </if>
+            <if test="createStartTime !=null and createStartTime !=''">
+                and create_time &gt;= #{createStartTime}
+            </if>
+            <if test="createEndTime !=null and createEndTime !=''">
+                and create_time &lt;= #{createEndTime}
+            </if>
+            <if test="projectLeader !=null and projectLeader !=''">
+                and project_leader = #{projectLeader}
+            </if>
+            <if test="provinceCode !=null and provinceCode !=''">
+                and province_code = #{provinceCode}
+            </if>
+            <if test="cityCode !=null and cityCode !=''">
+                and city_code = #{cityCode}
+            </if>
+        </where>
+    </sql>
+    <select id="selectChargingStationListByCityCode" parameterType="String" resultMap="BaseResultMap">
+        select assets_station_id,station_code,station_name,station_address from assets_charging_station
+        <if test="cityCode != null and cityCode !=''">
+            where city_code = #{cityCode}
+        </if>
+    </select>
+    
+    <select id="selectChargingStationCount" parameterType="AssetsChargingStation" resultType="Long">
+        select count(1) from assets_charging_station
+        <include refid="condition"/>
+    </select>
+
+    <select id="selectChargingStationList" parameterType="AssetsChargingStation" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from assets_charging_station
+        <include refid="condition"/>
+        order by  modify_time desc
+        <if test="pager!=null">limit #{pager.offset},#{pager.pageSize}</if>
+    </select>
+
+    <insert id="insertAssetsChargingStation"  parameterType="AssetsChargingStation" useGeneratedKeys="true" keyProperty="assetsStationId">
+        insert into assets_charging_station (
+            assets_station_id,
+            station_name,
+            station_code,
+            approval_flowing_code,
+            station_stage,
+            province_code,
+            city_code,
+            area_code,
+            station_address,
+            project_leader,
+            create_id,
+            modify_id,
+            create_time,
+            modify_time
+        )
+        values
+            (
+                #{assetsStationId},
+                #{stationName},
+                #{stationCode},
+                #{approvalFlowingCode},
+                #{stationStage},
+                #{provinceCode},
+                #{cityCode},
+                #{areaCode},
+                #{stationAddress},
+                #{projectLeader},
+                #{createId},
+                #{modifyId},
+                now(),
+                now()
+            )
+    </insert>
+
+    <update id="updateAssetsChargingStation" parameterType="AssetsChargingStation" >
+        update assets_charging_station set
+        <if test="stationName !=null and stationName !=''">
+            station_name = #{stationName},
+        </if>
+        <if test="stationCode !=null and stationCode !=''">
+            station_code = #{stationCode},
+        </if>
+        <if test="approvalFlowingCode !=null and approvalFlowingCode !=''">
+            approval_flowing_code = #{approvalFlowingCode},
+        </if>
+        <if test="stationStage !=null ">
+            station_stage = #{stationStage},
+        </if>
+        <if test="provinceCode !=null and provinceCode !=''">
+            province_code = #{provinceCode},
+        </if>
+        <if test="cityCode !=null and cityCode !=''">
+            city_code = #{cityCode},
+        </if>
+        <if test="areaCode !=null and areaCode !=''">
+            area_code = #{areaCode},
+        </if>
+        <if test="stationAddress !=null and stationAddress !=''">
+            station_address = #{stationAddress},
+        </if>
+        <if test="projectLeader !=null and projectLeader !=''">
+            project_leader = #{projectLeader},
+        </if>
+        <if test="approvalTotalPower !=null ">
+            approval_total_power = #{approvalTotalPower},
+        </if>
+        <if test="approvalTotalCost !=null ">
+            approval_total_cost = #{approvalTotalCost},
+        </if>
+        <if test="imp7tionTotalPower !=null ">
+            imp7tion_total_power = #{imp7tionTotalPower},
+        </if>
+        <if test="imp7tionTotalCost !=null ">
+            imp7tion_total_cost = #{imp7tionTotalCost},
+        </if>
+        <if test="final8sTotalPower !=null ">
+            final8s_total_power = #{final8sTotalPower},
+        </if>
+        <if test="final8sTotalCost !=null ">
+            final8s_total_cost = #{final8sTotalCost},
+        </if>
+        <if test="modifyId !=null ">
+            modify_id = #{modifyId},
+        </if>
+        modify_time = now()
+        where assets_station_id = #{assetsStationId}
+    </update>
+    
+    <select id="selectChargingStationById" parameterType="Long" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from assets_charging_station where assets_station_id = #{assetsStationId}
+    </select>
+    
+    <select id="selectChargingStationByCode" parameterType="String" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from assets_charging_station where station_code = #{stationCode}
+    </select>
+    <select id="queryChargingStationListForFieldAgreement"  resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+        FROM
+            assets_charging_station
+        WHERE
+	    assets_station_id
+	    NOT IN ( SELECT assets_station_id FROM field_agreement GROUP BY assets_station_id )
+    </select>
+    
+    <select id="selectChargingStationByIds" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from assets_charging_station
+        <where>
+            <if test="stationIdList !=null and stationIdList.size()>0">
+                and assets_station_id in
+                <foreach collection="stationIdList" separator="," open="(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    
+    <delete id="deleteChargingStationById" parameterType="Long" >
+        delete from  assets_charging_station where  assets_station_id = #{assetsStationId}
+    </delete>
+    
+    <select id="checkUnique" parameterType="AssetsChargingStation" resultType="Long">
+        select  count(1) from  assets_charging_station
+        where (station_name = #{stationName} or approval_flowing_code = #{approvalFlowingCode} or station_code = #{stationCode})
+        <if test="assetsStationId !=null and assetsStationId !=0">
+            and assets_station_id != #{assetsStationId}
+        </if>
+    </select>
+</mapper>

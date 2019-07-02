@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.FinalAccountsCollectMapper">
+    <resultMap id="BaseResultMap" type="FinalAccountsCollect">
+        <id property="final8sCollectId" column="final8s_collect_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="budgetCollectTitle" column="budget_collect_title"/>
+        <result property="projectName" column="project_name"/>
+        <result property="projectStage" column="project_stage"/>
+        <result property="projectUnit" column="project_unit"/>
+        <result property="budgetMoney" column="budget_money"/>
+        <result property="projectDesc" column="project_desc"/>
+        <result property="chargingPilesAmount" column="charging_piles_amount"/>
+        <result property="totalPower" column="total_power"/>
+        <result property="tra6erAmount" column="tra6er_amount"/>
+        <result property="totalCapacity" column="total_capacity"/>
+        <result property="projectCityLeader" column="project_city_leader"/>
+        <result property="projectHeadLeader" column="project_head_leader"/>
+        <result property="remark1" column="remark1"/>
+        <result property="remark2" column="remark2"/>
+        <result property="remark3" column="remark3"/>
+        <result property="remark4" column="remark4"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        final8s_collect_id,assets_station_id,budget_collect_title,project_name,project_stage,project_unit,
+        budget_money, project_desc, charging_piles_amount,total_power,tra6er_amount,total_capacity,project_city_leader,
+        project_head_leader,remark1,remark2,remark3,remark4,create_id,modify_id,create_time,modify_time
+    </sql>
+
+
+
+    <insert id="insertFinalAccountsCollect" parameterType="FinalAccountsCollect" useGeneratedKeys="true" keyProperty="final8sCollectId">
+        insert into final_accounts_collect (
+        final8s_collect_id,
+        assets_station_id,
+        budget_collect_title,
+        project_name,
+        project_stage,
+        project_unit,
+        budget_money,
+        project_desc,
+        charging_piles_amount,
+        total_power,
+        tra6er_amount,
+        total_capacity,
+        project_city_leader,
+        project_head_leader,
+        remark1,
+        remark2,
+        remark3,
+        remark4,
+        create_id
+        )
+        values
+            (
+            #{final8sCollectId},
+            #{assetsStationId},
+            #{budgetCollectTitle},
+            #{projectName},
+            #{projectStage},
+            #{projectUnit},
+            #{budgetMoney},
+            #{projectDesc},
+            #{chargingPilesAmount},
+            #{totalPower},
+            #{tra6erAmount},
+            #{totalCapacity},
+            #{projectCityLeader},
+            #{projectHeadLeader},
+            #{remark1},
+            #{remark2},
+            #{remark3},
+            #{remark4},
+            #{createId}
+            )
+    </insert>
+
+    <!-- 首先查询出符合条件的数据id编号 -->
+    <delete id="deleteFinalAccountsCollectByStationId"  parameterType="Long">
+        delete from final_accounts_collect where assets_station_id = #{assetsStationId}
+    </delete>
+
+
+    <select id="selectFinalAccountsCollectByStationId"  parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from final_accounts_collect where assets_station_id = #{assetsStationId} limit 1
+    </select>
+
+</mapper>

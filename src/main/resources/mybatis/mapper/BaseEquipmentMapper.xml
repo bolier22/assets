@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.BaseEquipmentMapper">
+    <resultMap id="BaseResultMap" type="BaseEquipment">
+        <result property="equ5tId" column="equ5t_id"/>
+        <result property="equ5tName" column="equ5t_name"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        equ5t_id,equ5t_name, create_id, modify_id,create_time,modify_time
+    </sql>
+
+    <select id="selectBaseEquipmentList" parameterType="BaseEquipment" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from  base_equipment
+        <if test="pager!=null">limit #{pager.offset},#{pager.pageSize}</if>
+    </select>
+    
+    <select id="selectBaseEquipmentCount" parameterType="BaseEquipment" resultType="Long">
+        select  count(1) from  base_equipment
+    </select>
+
+    <update id="updateBaseEquipment" parameterType="BaseEquipment">
+        update base_equipment set equ5t_name = #{equ5tName},modify_id = #{modifyId},modify_time = now() where equ5t_id = #{equ5tId}
+    </update>
+
+    <insert id="insertBaseEquipment"  parameterType="BaseEquipment" useGeneratedKeys="true" keyProperty="equ5tId">
+        insert into base_equipment (
+        equ5t_id,
+        equ5t_name,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+        )
+        values
+            (
+            #{equ5tId},
+            #{equ5tName},
+            #{createId},
+            #{modifyId},
+            now(),
+            now()
+            )
+    </insert>
+    
+    <select id="selectBaseEquipmentById" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from  base_equipment
+        where equ5t_id = #{equ5tId}
+    </select>
+    
+    <delete id="deleteBaseEquipmentById" parameterType="Long" >
+        delete from base_equipment where equ5t_id = #{equ5tId}
+    </delete>
+</mapper>

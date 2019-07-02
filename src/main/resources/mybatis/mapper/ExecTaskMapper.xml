@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.ExecTaskMapper">
+  <resultMap id="BaseResultMap" type="ExecTask">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="exec_url" jdbcType="VARCHAR" property="execUrl" />
+    <result column="exec_key" jdbcType="VARCHAR" property="execKey" />
+    <result column="exec_expired" jdbcType="BIGINT" property="execExpired" />
+    <result column="exec_status" jdbcType="BIT" property="execStatus" />
+    <result column="exec_service_ip" jdbcType="VARCHAR" property="execServiceIp" />
+    <result column="exec_time" jdbcType="BIGINT" property="execTime" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="send_email" jdbcType="VARCHAR" property="sendEmail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, exec_url, exec_key, exec_expired, exec_status, exec_service_ip, exec_time,
+    begin_time, end_time, send_email
+  </sql>
+
+  <select id="selectByExecKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exec_task
+    where exec_key = #{execKey}
+  </select>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.AreaCodeMapper">
+    <resultMap id="areaCodeResultMap" type="TblAreaCode">
+        <id property="areaId" column="area_id" />
+        <result property="areaCode" column="area_code" />
+        <result property="areaName" column="area_name" />
+        <result property="areaShortName" column="area_short_name" />
+        <result property="areaFullName" column="area_full_name" />
+        <result property="areaFullCode" column="area_full_code" />
+        <result property="areaPostcode" column="area_postcode" />
+        <result property="areaAreaCode" column="area_area_code" />
+        <result property="areaLevel" column="area_level" />
+        <result property="areaSupCode" column="area_sup_code" />
+        <result property="areaRemark" column="area_remark" />
+    </resultMap>
+
+	<sql id="areacode">
+		area_id,area_code,area_name,area_short_name,area_full_name,
+		area_full_code,area_postcode,area_area_code,area_level,
+		area_sup_code,area_remark
+	</sql>
+
+	<select id="findProvince" resultMap="areaCodeResultMap">
+		select <include refid="areacode" /> from tbl_area_code
+		where area_level='2'
+	</select>
+	<select id="findCity" parameterType="String" resultMap="areaCodeResultMap">
+		select <include refid="areacode" /> from tbl_area_code
+		where area_level='3' and area_sup_code=#{areaId}
+	</select>
+	<select id="findArea" parameterType="String" resultMap="areaCodeResultMap">
+		select <include refid="areacode" /> from tbl_area_code
+		where area_level='4' and area_sup_code=#{areaId}
+	</select>
+	<select id="findTown" parameterType="String" resultMap="areaCodeResultMap">
+		select <include refid="areacode" /> from tbl_area_code
+		where area_level='5' and area_sup_code=#{areaSupCode}
+	</select>
+	<select id="findNameByAreaId" parameterType="String" resultMap="areaCodeResultMap">
+		SELECT <include refid="areacode" />
+		FROM tbl_area_code
+		WHERE area_id =#{areaId}
+	</select>
+	<select id="findNameByAreaCode" parameterType="String" resultMap="areaCodeResultMap">
+		SELECT <include refid="areacode" />
+		FROM tbl_area_code
+		WHERE area_code =#{areaCode}
+	</select>
+
+</mapper>

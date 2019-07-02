@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.OperateInfoMapper">
+    <resultMap id="BaseResultMap" type="OperateInfo">
+        <id property="operateId" column="operate_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="recordName" column="record_name"/>
+        <result property="presentTime" column="present_time"/>
+        <result property="totalMoney" column="total_money"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        operate_id,assets_station_id,record_name,present_time,total_money,create_id,modify_id,create_time,modify_time
+    </sql>
+
+    <select id="selectOperateListByStationId" parameterType="OperateInfo" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from  operate_info where assets_station_id = #{assetsStationId}
+        <if test="pager!=null">limit #{pager.offset},#{pager.pageSize}</if>
+    </select>
+
+    <select id="selectOperateCountByStationId" parameterType="OperateInfo" resultType="Long">
+        select count(1) from  operate_info where assets_station_id = #{assetsStationId}
+    </select>
+    
+    <delete id="deleteOperateByOperateId" parameterType="Long" >
+        delete from operate_info where operate_id = #{operateId}
+    </delete>
+    
+    <select id="selectOperateByOperateId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from  operate_info where operate_id = #{operateId}
+    </select>
+
+    <insert id="insertOperateInfo"  parameterType="OperateInfo" useGeneratedKeys="true" keyProperty="operateId">
+        insert into operate_info (
+        operate_id,
+        assets_station_id,
+        record_name,
+        present_time,
+        total_money,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+        )
+        values
+            (
+            #{operateId},
+            #{assetsStationId},
+            #{recordName},
+            #{presentTime},
+            #{totalMoney},
+            #{createId},
+            #{modifyId},
+            now(),
+            now()
+            )
+    </insert>
+    
+    <update id="updateOperateInfo" parameterType="OperateInfo">
+        update operate_info set
+        record_name = #{recordName},
+        present_time = #{presentTime},
+        total_money = #{totalMoney},
+        modify_id = #{modifyId},
+        modify_time = now()
+        where operate_id = #{operateId}
+    </update>
+
+</mapper>

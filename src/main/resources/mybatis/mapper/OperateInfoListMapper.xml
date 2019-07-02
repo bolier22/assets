@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.OperateInfoListMapper">
+    <resultMap id="BaseResultMap" type="OperateInfoList">
+        <id property="listId" column="list_id"/>
+        <result property="operateId" column="operate_id"/>
+        <result property="equ5tName" column="equ5t_name"/>
+        <result property="unit" column="unit"/>
+        <result property="amount" column="amount"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="totalMoney" column="total_money"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        list_id,operate_id,equ5t_name,unit,amount,unit_price,total_money,create_id,modify_id,create_time,modify_time
+    </sql>
+    
+    <delete id="deleteOperateByOperateId" parameterType="Long" >
+        delete from operate_info_list where operate_id = #{operateId}
+    </delete>
+
+    <select id="selectOperateInfoListListByOperateId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from operate_info_list where operate_id = #{operateId}
+    </select>
+
+    <insert id="insertOperateInfoList"  parameterType="OperateInfoList" useGeneratedKeys="true" keyProperty="operateId">
+        insert into operate_info_list (
+        list_id,
+        operate_id,
+        equ5t_name,unit,amount,unit_price,total_money,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+        )
+        values
+            (
+            #{listId},
+            #{operateId},
+            #{equ5tName},#{unit},#{amount},#{unitPrice},#{totalMoney},
+            #{createId},
+            #{modifyId},
+            now(),
+            now()
+            )
+    </insert>
+    
+    <update id="updateOperateInfoList" parameterType="OperateInfoList">
+        update operate_info_list set equ5t_name = #{equ5tName},unit=#{unit},
+        amount = #{amount},unit_price= #{unitPrice},total_money = #{totalMoney},modify_id = #{modifyId},
+        modify_time = now() where list_id = #{listId}
+    </update>
+</mapper>

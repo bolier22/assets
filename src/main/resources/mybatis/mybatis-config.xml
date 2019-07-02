@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTDConfig 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+
+        <typeAlias alias="BudgetBase" type="com.wanma.eichong.assets.entity.BudgetBase" />
+        <typeAlias alias="AssetsEquipmentList" type="com.wanma.eichong.assets.entity.AssetsEquipmentList" />
+        <typeAlias alias="BaseEquipment" type="com.wanma.eichong.assets.entity.BaseEquipment" />
+        <typeAlias alias="BaseEquipmentModel" type="com.wanma.eichong.assets.entity.BaseEquipmentModel" />
+        <typeAlias alias="BudgetCompletePeriodQuota" type="com.wanma.eichong.assets.entity.BudgetCompletePeriodQuota" />
+        <typeAlias alias="BudgetFirst3yearsPeriodQuota" type="com.wanma.eichong.assets.entity.BudgetFirst3yearsPeriodQuota" />
+        <typeAlias alias="BudgetFirstYearsCost" type="com.wanma.eichong.assets.entity.BudgetFirstYearsCost" />
+        <typeAlias alias="ExecTask" type="com.wanma.eichong.assets.entity.ExecTask" />
+        <typeAlias alias="FieldAgreement" type="com.wanma.eichong.assets.entity.FieldAgreement" />
+        <typeAlias alias="FieldAgreementDetail" type="com.wanma.eichong.assets.entity.FieldAgreementDetail" />
+        <typeAlias alias="FileList" type="com.wanma.eichong.assets.entity.FileList" />
+        <typeAlias alias="FinalAccountsCollect" type="com.wanma.eichong.assets.entity.FinalAccountsCollect" />
+        <typeAlias alias="FinalAccountsCollectList" type="com.wanma.eichong.assets.entity.FinalAccountsCollectList" />
+        <typeAlias alias="Imp7tionBudgetCollectBase" type="com.wanma.eichong.assets.entity.Imp7tionBudgetCollectBase" />
+        <typeAlias alias="Imp7tionBudgetCollectList" type="com.wanma.eichong.assets.entity.Imp7tionBudgetCollectList" />
+        <typeAlias alias="OperateInfo" type="com.wanma.eichong.assets.entity.OperateInfo" />
+        <typeAlias alias="OperateInfoList" type="com.wanma.eichong.assets.entity.OperateInfoList" />
+        <typeAlias alias="TblAreaCode" type="com.wanma.eichong.assets.entity.TblAreaCode" />
+        <typeAlias alias="UserAssets" type="com.wanma.eichong.assets.entity.UserAssets" />
+        <typeAlias alias="AssetsMenu" type="com.wanma.eichong.assets.entity.AssetsMenu" />
+        <typeAlias alias="AssetsChargingStation" type="com.wanma.eichong.assets.entity.AssetsChargingStation" />
+    </typeAliases>
+</configuration>

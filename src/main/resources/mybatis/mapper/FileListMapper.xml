@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanma.eichong.assets.mapper.FileListMapper">
+    <resultMap id="BaseResultMap" type="FileList">
+        <id property="fileId" column="file_id"/>
+        <result property="assetsStationId" column="assets_station_id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="fileUrl" column="file_url"/>
+        <result property="fileType" column="file_type"/>
+        <result property="createId" column="create_id"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        file_id,
+        assets_station_id,
+        file_name,
+        file_url,
+        file_type,
+        create_id,
+        modify_id,
+        create_time,
+        modify_time
+    </sql>
+
+
+    <insert id="insertFileList"  parameterType="FileList" useGeneratedKeys="true" keyProperty="fileId">
+        insert into file_list(
+        file_id,
+        assets_station_id,
+        file_name,
+        file_url,
+        file_type,
+        create_id
+        )
+        values
+            (
+            #{fileId},
+            #{assetsStationId},
+            #{fileName},
+            #{fileUrl},
+            #{fileType},
+            #{createId}
+            )
+    </insert>
+
+    <delete id="deleteFileListByStationIdAndType">
+        delete from file_list where assets_station_id = #{assetsStationId} and file_type = #{fileType}
+    </delete>
+
+    <delete id="deleteFileListByFileId"  parameterType="Long">
+        delete from file_list where file_id = #{fileId}
+    </delete>
+
+    <select id="selectFileListListByStationIdAndType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from file_list where assets_station_id = #{assetsStationId} and file_type = #{fileType}
+    </select>
+
+    <select id="selectFileListByFileId" resultMap="BaseResultMap" parameterType="Long">
+        select <include refid="Base_Column_List"/> from file_list where file_id = #{fileId} limit 1
+    </select>
+
+    <select id="selectFileListListByStationId" parameterType="Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from file_list where assets_station_id = #{assetsStationId}
+    </select>
+    <!--
+    <if test="fileId != null and fileId != ''">file_id = #{fileId},</if>
+<if test="assetsStationId != null and assetsStationId != ''">assets_station_id = #{assetsStationId},</if>
+<if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+<if test="fileUrl != null and fileUrl != ''">file_url = #{fileUrl},</if>
+<if test="fileType != null and fileType != ''">file_type = #{fileType},</if>
+<if test="createId != null and createId != ''">create_id = #{createId},</if>
+<if test="modifyId != null and modifyId != ''">modify_id = #{modifyId},</if>
+<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+<if test="modifyTime != null and modifyTime != ''">modify_time = #{modifyTime},</if>
+
+
+
+    -->
+</mapper>
